@@ -1,62 +1,58 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+Air Traffic Control
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Objective: Using a language of your choice, develop an Air Traffic Control system (ATCS) that meets the requirements listed below. The ATCS will allow the queuing and dequeuing of aircraft (AC).
 
-## About Laravel
+Layers
+The ATCS should have the following layers,
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+1.REST layer
+a.This layer provides access to the ATCS.
+b.It should provide endpoints for all of the ATC methods.
+c.Appropriate error messages should be displayed / returned.
+i.Ex: A method was called before the system has booted.
+d.It must be a REST interface.
+i.Hint: Follow traditional REST best practices
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+2.Logic layer
+a.This layer provides the logical operations of the ATCS.
+b.The it should provide the following functions
+i.Boot – start the system
+ii.Enqueue – Add an AC to the queue
+iii.Dequeue- Remove an AC from the queue based on priority
+iv.List – Provide the current order of the AC in the queue
+c.It should access the queue through the data layer.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+3.Data layer
+a.This layer holds the data structure for the queue.
+b.The queue must be accessed through this layer, not directly.
 
-## Learning Laravel
+Objects
+The ATCS should have the following objects with the listed properties,
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+1.Aircraft (AC)
+a.ID
+i.This field will store the AC id
+b.Type
+i.Emergency, VIP, Passenger, or Cargo
+c.Size
+i.Small or Large
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-## Laravel Sponsors
+Dequeue Logic
+The ATCS should dequeue planes with the following logic
+1.VIP are more important than other types, except Emergency.
+2.Emergency AC always have the highest priority.
+3.Passenger ACs have a higher priority than Cargo ACs.
+4.Large ACs of a given type have priority over Small ACs of the same type.
+5.Earlier enqueued ACs of a given type and size have precedence over later enqueued ACs of the same type and size.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Requirements
+1.Implement the ATCS with the requirements specified above.
+2.Assume multiple users will concurrently access they system. Multiple air traffic controllers will ask for the next plane to be dequeued.
+3.To the greatest extent possible, show all of your code.  Feel free to use standard libraries provided by your chosen implementation language.
+4.Please send your complete project including artifacts with build and deploy instructions.    
+5.Please include a README me file with instructions on how to run the project locally.  
+6.Optional Bonuses: 
+a.Use a non in-memory/persistent datastore in the data layer.
+b.Implement a UI to show the queue and add/remove ACs.
 
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
